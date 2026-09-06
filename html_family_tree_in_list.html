@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Archive / Familienarchiv</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --accent: #2b5876;
+            --accent-light: #4e4376;
+            --border: #e9ecef;
+            --badge-bg: #e2e8f0;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 { font-size: 1.4rem; margin: 0 0 8px 0; }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover, button.active {
+            background-color: white;
+            color: var(--accent);
+        }
+
+        .btn-action {
+            background-color: var(--accent);
+            border: 1px solid var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .btn-action:hover { opacity: 0.85; }
+        .btn-action.save { background-color: var(--success); border-color: var(--success); }
+        .btn-action.danger { background-color: var(--danger); border-color: var(--danger); }
+        .btn-action.warning { background-color: #e67e22; border-color: #e67e22; }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 16px auto;
+            display: block;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+            margin: 20px 0 12px 0;
+        }
+
+        .tree-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .tree-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .tree-card:hover { border-color: var(--accent); }
+
+        .person-id {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--accent);
+            background: var(--badge-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .person-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .person-name.editable:hover {
+            background: #fff3cd;
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 0 4px;
+        }
+
+        .person-details {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .spouse-info {
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px dashed var(--border);
+            font-size: 0.85rem;
+        }
+
+        .card-actions {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .ancestry-section {
+            background: #f0f7ff;
+            border: 1px solid #b3d4fc;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 24px;
+        }
+
+        .ancestry-section h3 {
+            color: var(--accent);
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .ancestry-section .badge {
+            background: #b3d4fc;
+            color: #1a4a7a;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .document-card {
+            background: #fffdf9;
+            border: 1px solid #f0e6d2;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .save-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+        }
+
+        .save-bar.visible { transform: translateY(0); }
+        .save-bar button { padding: 8px 20px; font-size: 0.9rem; font-weight: bold; }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            min-width: 320px;
+            max-width: 90vw;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal h3 { margin: 0 0 16px 0; color: var(--accent); }
+
+        .modal label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+        }
+
+        .modal input, .modal select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .modal-actions button {
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (min-width: 600px) {
+            body { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="title">Family Archive / Familienarchiv</h1>
+    <div class="controls">
+        <button id="lang-btn" onclick="toggleLanguage()">Language: DE / EN</button>
+        <button onclick="openAddRootPerson()">+ Add Person</button>
+    </div>
+</header>
+
+<input type="text" id="search" class="search-box" placeholder="Search name, place, occupation..." oninput="filterCards()">
+
+<div id="content" class="tree-container"></div>
+
+<div id="ancestry-container"></div>
+
+<div class="document-card" id="doc-card">
+    <div class="person-id">HISTORICAL DOCUMENT</div>
+    <h3 id="doc-title" style="margin: 6px 0;">Bürgerbrief (1815)</h3>
+    <p id="doc-body"></p>
+</div>
+
+<div class="save-bar" id="save-bar">
+    <span id="save-status">Unsaved changes</span>
+    <div>
+        <button onclick="discardChanges()" class="btn-action danger" style="padding:8px 16px;font-size:0.9rem;">Discard</button>
+        <button onclick="saveChanges()" class="btn-action save" style="padding:8px 16px;font-size:0.9rem;">Save Changes</button>
+    </div>
+</div>
+
+<script>
+let currentLang = 'en';
+let jsonData = null;
+let hasChanges = false;
+
+async function loadData() {
+    const response = await fetch('family_tree_base.json');
+    jsonData = await response.json();
+    document.getElementById('title').textContent = jsonData.document_title || 'Family Archive';
+    render();
+}
+
+function markDirty() {
+    hasChanges = true;
+    document.getElementById('save-bar').classList.add('visible');
+}
+
+function render() {
+    renderCards();
+    renderAncestry();
+    renderDocument();
+}
+
+function renderCards() {
+    const container = document.getElementById('content');
+    container.innerHTML = '';
+
+    jsonData.generations.forEach((gen, genIdx) => {
+        const sectionHeader = document.createElement('div');
+        sectionHeader.style.gridColumn = '1 / -1';
+        sectionHeader.innerHTML = `<h2 class="section-title">${gen.description || gen.generation}</h2>`;
+        container.appendChild(sectionHeader);
+
+        gen.individuals.forEach((person, personIdx) => {
+            const card = document.createElement('div');
+            card.className = 'tree-card';
+            card.dataset.genIdx = genIdx;
+            card.dataset.personIdx = personIdx;
+
+            const occ = currentLang === 'de' ? (person.occupation_de || '') : (person.occupation_en || '');
+            const notes = currentLang === 'de' ? (person.notes_de || person.marital_status_de || '') : (person.notes_en || person.marital_status_en || '');
+            const birth = person.birth_year || person.birth_date || '';
+            const loc = person.location || '';
+
+            card.innerHTML = `
+                <span class="person-id">${person.id}</span>
+                <div class="person-name editable" onclick="editName(${genIdx}, ${personIdx})">${person.name}</div>
+                <div class="person-details">
+                    ${birth ? `<div>Born: ${birth}</div>` : ''}
+                    ${loc ? `<div>📍 ${loc}</div>` : ''}
+                    ${occ ? `<div>💼 ${occ}</div>` : ''}
+                    ${notes ? `<div style="color: #c53030;">ℹ️ ${notes}</div>` : ''}
+                </div>
+                ${person.spouse ? `
+                    <div class="spouse-info">
+                        💍 <strong>${currentLang === 'de' ? 'Ehepartner' : 'Spouse'}:</strong> ${person.spouse}
+                        ${person.spouse_ancestry_ref ? ' <span class="person-id" style="font-size:0.6rem;">↗ see ancestry below</span>' : ''}
+                    </div>
+                ` : ''}
+                <div class="card-actions">
+                    <button class="btn-action" onclick="editName(${genIdx}, ${personIdx})">✏️ Edit Name</button>
+                    <button class="btn-action warning" onclick="addChild(${genIdx}, ${personIdx})">+ Add Child</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    });
+}
+
+function renderAncestry() {
+    const container = document.getElementById('ancestry-container');
+    container.innerHTML = '';
+
+    const ancestry = jsonData.non_descendant_ancestry;
+    if (!ancestry || ancestry.length === 0) return;
+
+    ancestry.forEach((entry, idx) => {
+        const section = document.createElement('div');
+        section.className = 'ancestry-section';
+
+        const fatherName = entry.father?.name || entry.father?.name_note || 'Unknown';
+        const motherName = entry.mother?.name || entry.mother?.name_note || 'Unknown';
+
+        let childrenHtml = '';
+        if (entry.children && entry.children.length > 0) {
+            childrenHtml = '<div style="margin-top:8px;"><strong>Children:</strong><ul style="margin:4px 0;padding-left:20px;">';
+            entry.children.forEach(child => {
+                const name = child.name || `Child #${child.position} (unreadable)`;
+                const extra = child.has_children ? ' — <em>has descendants</em>' : '';
+                childrenHtml += `<li>${name}${extra}</li>`;
+            });
+            childrenHtml += '</ul></div>';
+        }
+        if (entry.children_note) {
+            childrenHtml += `<div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">${entry.children_note}</div>`;
+        }
+
+        let siblingsHtml = '';
+        if (entry.siblings_note) {
+            siblingsHtml = `<div style="margin-top:6px;font-size:0.8rem;color:var(--text-muted);">${entry.siblings_note}</div>`;
+        }
+
+        section.innerHTML = `
+            <span class="badge">NON-DESCENDANT ANCESTRY</span>
+            <span class="badge" style="margin-left:4px;">→ linked to ${entry.connected_to}</span>
+            <h3>${entry.description}</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+                <div><strong>Father:</strong> ${fatherName}</div>
+                <div><strong>Mother:</strong> ${motherName}</div>
+            </div>
+            ${childrenHtml}
+            ${siblingsHtml}
+        `;
+        container.appendChild(section);
+    });
+}
+
+function renderDocument() {
+    const doc = jsonData.historical_document;
+    if (!doc) return;
+    const text = currentLang === 'de' ? doc.content_de : doc.content_en;
+    document.getElementById('doc-body').innerText = text + ` (${doc.date})`;
+    document.getElementById('doc-title').textContent = `${doc.title_de} (${doc.date})`;
+}
+
+function editName(genIdx, personIdx) {
+    const person = jsonData.generations[genIdx].individuals[personIdx];
+    showModal('Edit Name', [
+        { label: 'Name', key: 'name', value: person.name },
+        { label: 'ID', key: 'id', value: person.id, readonly: true }
+    ], (values) => {
+        if (values.name && values.name !== person.name) {
+            person.name = values.name;
+            markDirty();
+            render();
+        }
+    });
+}
+
+function addChild(genIdx, personIdx) {
+    const parent = jsonData.generations[genIdx].individuals[personIdx];
+    const parentId = parent.id;
+
+    const childGenName = `${parentId} Children`;
+    let childGen = jsonData.generations.find(g => g.generation === childGenName);
+
+    // Also check for combined generation names like "IV.a.1 / IV.d.4 Children"
+    if (!childGen) {
+        childGen = jsonData.generations.find(g => g.generation.startsWith(parentId + ' ') && g.generation.endsWith('Children'));
+    }
+    if (!childGen) {
+        childGen = jsonData.generations.find(g => g.generation.includes(parentId) && g.generation.endsWith('Children'));
+    }
+
+    const existingChildren = childGen ? childGen.individuals : [];
+    const nextLetter = existingChildren.length > 0
+        ? String.fromCharCode(existingChildren.length + 97)
+        : 'a';
+    const suggestedId = `${parentId}.${nextLetter}`;
+
+    showModal(`Add Child of ${parent.name}`, [
+        { label: 'Child ID', key: 'id', value: suggestedId },
+        { label: 'Name', key: 'name', value: '' },
+        { label: 'Spouse (optional)', key: 'spouse', value: '' },
+        { label: 'Location (optional)', key: 'location', value: '' },
+        { label: 'Birth Year (optional)', key: 'birth_year', value: '' }
+    ], (values) => {
+        if (!values.name) { alert('Name is required'); return; }
+
+        const newPerson = { id: values.id, name: values.name };
+        if (values.spouse) newPerson.spouse = values.spouse;
+        if (values.location) newPerson.location = values.location;
+        if (values.birth_year) newPerson.birth_year = values.birth_year;
+
+        if (childGen) {
+            childGen.individuals.push(newPerson);
+        } else {
+            const newGen = {
+                generation: childGenName,
+                description: `Children of ${parent.name}`,
+                individuals: [newPerson]
+            };
+            // Insert after the parent's generation
+            const insertIdx = genIdx + 1;
+            jsonData.generations.splice(insertIdx, 0, newGen);
+        }
+
+        markDirty();
+        render();
+    });
+}
+
+function openAddRootPerson() {
+    const genNames = jsonData.generations.map(g => g.generation);
+    showModal('Add Person to Generation', [
+        { label: 'Generation (existing or new)', key: 'generation', value: '', datalist: genNames },
+        { label: 'Person ID', key: 'id', value: '' },
+        { label: 'Name', key: 'name', value: '' },
+        { label: 'Spouse (optional)', key: 'spouse', value: '' },
+        { label: 'Location (optional)', key: 'location', value: '' }
+    ], (values) => {
+        if (!values.name || !values.generation) { alert('Generation and Name are required'); return; }
+
+        const newPerson = { id: values.id || 'NEW', name: values.name };
+        if (values.spouse) newPerson.spouse = values.spouse;
+        if (values.location) newPerson.location = values.location;
+
+        let gen = jsonData.generations.find(g => g.generation === values.generation);
+        if (gen) {
+            gen.individuals.push(newPerson);
+        } else {
+            jsonData.generations.push({
+                generation: values.generation,
+                description: values.generation,
+                individuals: [newPerson]
+            });
+        }
+
+        markDirty();
+        render();
+    });
+}
+
+function showModal(title, fields, onConfirm) {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+
+    let fieldsHtml = fields.map(f => {
+        const readonly = f.readonly ? 'readonly style="background:#eee;"' : '';
+        const datalist = f.datalist ? `list="dl-${f.key}"` : '';
+        let datalistHtml = '';
+        if (f.datalist) {
+            datalistHtml = `<datalist id="dl-${f.key}">${f.datalist.map(v => `<option value="${v}">`).join('')}</datalist>`;
+        }
+        return `
+            <label>${f.label}</label>
+            <input type="text" id="modal-${f.key}" value="${f.value || ''}" ${readonly} ${datalist}>
+            ${datalistHtml}
+        `;
+    }).join('');
+
+    overlay.innerHTML = `
+        <div class="modal">
+            <h3>${title}</h3>
+            ${fieldsHtml}
+            <div class="modal-actions">
+                <button class="btn-action danger" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+                <button class="btn-action save" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    overlay.querySelector('#modal-confirm').onclick = () => {
+        const values = {};
+        fields.forEach(f => {
+            values[f.key] = document.getElementById(`modal-${f.key}`).value.trim();
+        });
+        overlay.remove();
+        onConfirm(values);
+    };
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.remove();
+    });
+
+    const firstInput = overlay.querySelector('input:not([readonly])');
+    if (firstInput) setTimeout(() => firstInput.focus(), 50);
+}
+
+async function saveChanges() {
+    document.getElementById('save-status').textContent = 'Saving...';
+    try {
+        const response = await fetch('/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jsonData)
+        });
+        const result = await response.json();
+        if (result.status === 'ok') {
+            hasChanges = false;
+            document.getElementById('save-bar').classList.remove('visible');
+        } else {
+            alert('Save failed: ' + result.message);
+            document.getElementById('save-status').textContent = 'Save failed!';
+        }
+    } catch (e) {
+        alert('Save failed: ' + e.message);
+        document.getElementById('save-status').textContent = 'Save failed!';
+    }
+}
+
+function discardChanges() {
+    if (confirm('Discard all unsaved changes?')) {
+        hasChanges = false;
+        document.getElementById('save-bar').classList.remove('visible');
+        loadData();
+    }
+}
+
+function toggleLanguage() {
+    currentLang = currentLang === 'de' ? 'en' : 'de';
+    document.getElementById('lang-btn').innerText = `Lang: ${currentLang.toUpperCase()}`;
+    render();
+}
+
+function filterCards() {
+    const query = document.getElementById('search').value.toLowerCase();
+    const cards = document.querySelectorAll('.tree-card');
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.classList.toggle('hidden', !text.includes(query));
+    });
+}
+
+loadData();
+</script>
+
+</body>
+</html>

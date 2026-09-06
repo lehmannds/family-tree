@@ -1,0 +1,1180 @@
+{
+  "document_title": "FAMILY ARCHIVE 05-03-2022 18.26",
+  "generations": [
+    {
+      "generation": "I",
+      "individuals": [
+        {
+          "id": "I.1",
+          "name": "Babe Gutchen",
+          "birth_year": "1695",
+          "spouse": "Eliakam Ephraim (Lehmann)"
+        }
+      ]
+    },
+    {
+      "generation": "II",
+      "description": "Deren Tochter / Their Daughter",
+      "individuals": [
+        {
+          "id": "II.1",
+          "name": "Rahel Ephraim Lehmann",
+          "location": "Liebenwalde",
+          "spouse": "Eleasar Ephraim Liepmann",
+          "spouse_location": "Liebenwalde"
+        }
+      ]
+    },
+    {
+      "generation": "III",
+      "description": "Deren Tochter / Their Daughter",
+      "individuals": [
+        {
+          "id": "III.1",
+          "name": "Pesse Pauline Liepmann",
+          "birth_year": "1760",
+          "location": "Altstrelitz",
+          "spouse": "Ephraim Lehmann (Reb Ephraim)",
+          "spouse_birth_year": "1759"
+        }
+      ]
+    },
+    {
+      "generation": "IV",
+      "description": "Deren Kinder / Their Children",
+      "individuals": [
+        {
+          "id": "IV.a",
+          "name": "Michael Ephraim Lehmann",
+          "occupation_de": "Religionslehrer",
+          "occupation_en": "Religion Teacher",
+          "location": "Prenzlau",
+          "spouse": "Fanny Neugass",
+          "spouse_location": "Berlin"
+        },
+        {
+          "id": "IV.b",
+          "name": "Scheindel Ephraim Lehmann",
+          "location": "Prenzlau",
+          "spouse": "Leib Meyer alias Lehmann",
+          "spouse_id_ref": "V"
+        },
+        {
+          "id": "IV.c",
+          "name": "Eleasar Ephraim Lehmann",
+          "location": "Pasewalk",
+          "spouse": "Marianne Götz",
+          "spouse_location": "Penzlin"
+        },
+        {
+          "id": "IV.c.single",
+          "name": "Rahel Ephraim Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "location": "Prenzlau"
+        },
+        {
+          "id": "IV.d",
+          "name": "Elias Ephraim Lehmann",
+          "location": "Prenzlau",
+          "spouse": "Schöne Meyer alias Lehmann"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a Children",
+      "description": "Deren Kinder / Their Children (IV.a)",
+      "individuals": [
+        {
+          "id": "IV.a.1",
+          "name": "Adolph Lehmann",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Stettin",
+          "spouse": "Pauline Ephraim",
+          "spouse_alias": "Tante Linchen"
+        },
+        {
+          "id": "IV.a.2",
+          "name": "Hermann Lehmann",
+          "birth_date": "1831-09-07",
+          "location": "Stettin, später Berlin",
+          "spouse": "Sophie Ephraim",
+          "spouse_birth_date": "1844-09-10",
+          "spouse_death_date": "1844-01-07"
+        },
+        {
+          "id": "IV.a.3",
+          "name": "Pauline Lehmann",
+          "location": "Berlin",
+          "spouse": "Hermann Hirschfeld",
+          "spouse_occupation_de": "Kaufmann",
+          "spouse_occupation_en": "Merchant"
+        },
+        {
+          "id": "IV.a.4",
+          "name": "Rosalie Lehmann",
+          "spouse": "Hermann Cohn",
+          "spouse_occupation_de": "Kaufmann",
+          "spouse_occupation_en": "Merchant",
+          "spouse_location": "Halberstadt"
+        },
+        {
+          "id": "IV.a.5",
+          "name": "Eduard Lehmann",
+          "death_de": "1870 in Elsass gefallen",
+          "death_en": "Fallen in action in Alsace, 1870",
+          "spouse": "Fanny Heinemann"
+        },
+        {
+          "id": "IV.a.6",
+          "name": "Leo Lehmann",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Ballenstedt, später Potsdam",
+          "spouse": "Berta Glaser"
+        },
+        {
+          "id": "IV.a.7",
+          "name": "Julchen Lehmann",
+          "location": "Schievelbein",
+          "spouse": "Salomon Borchard"
+        }
+      ]
+    },
+    {
+      "generation": "IV.b Children",
+      "description": "Deren Kinder / Their Children (IV.b)",
+      "individuals": [
+        {
+          "id": "IV.b.1",
+          "name": "Moritz Meyer",
+          "location": "Laage Mecklenburg",
+          "spouse": "Dina Keindel",
+          "notes_de": "Kinderlos",
+          "notes_en": "Childless"
+        },
+        {
+          "id": "IV.b.2",
+          "name": "Louis Meyer",
+          "location": "Prenzlau / Strausberg",
+          "spouse": "Lina Faig"
+        },
+        {
+          "id": "IV.b.3",
+          "name": "Pauline Meyer",
+          "location": "Berlin",
+          "spouse": "Michael Moritz Lehmann"
+        },
+        {
+          "id": "IV.b.4",
+          "name": "Emil Meyer",
+          "location": "Prenzlau",
+          "spouse": "Rahel Salomon",
+          "notes_de": "Kinderlos",
+          "notes_en": "Childless"
+        },
+        {
+          "id": "IV.b.4.single",
+          "name": "Therese Meyer",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried"
+        },
+        {
+          "id": "IV.b.5",
+          "name": "Eduard Meyer",
+          "location": "Berlin",
+          "spouse": "Fanny Schildberger"
+        }
+      ]
+    },
+    {
+      "generation": "IV.c Children",
+      "description": "Deren Kinder / Their Children (IV.c)",
+      "individuals": [
+        {
+          "id": "IV.c.1",
+          "name": "Götz Lehmann",
+          "location": "Pasewalk",
+          "spouse": "Amalie Gutmann",
+          "spouse_origin": "Lissa"
+        },
+        {
+          "id": "IV.c.2",
+          "name": "Michael Lehmann",
+          "spouse": "Pauline Meyer"
+        },
+        {
+          "id": "IV.c.single1",
+          "name": "Julius Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried"
+        },
+        {
+          "id": "IV.c.single2",
+          "name": "Arnold Lehmann",
+          "notes_de": "Jung gestorben",
+          "notes_en": "Died young"
+        },
+        {
+          "id": "IV.c.single3",
+          "name": "Hermann Lehmann",
+          "notes_de": "Jung gestorben",
+          "notes_en": "Died young"
+        },
+        {
+          "id": "IV.c.3",
+          "name": "Pauline Lehmann",
+          "location": "Ribnitz Mecklenburg",
+          "spouse": "Hermann J. Lichenheim"
+        },
+        {
+          "id": "IV.c.4",
+          "name": "Ewald Lehmann",
+          "spouse": "Mathilde Gowa",
+          "spouse_location": "Hamburg"
+        }
+      ]
+    },
+    {
+      "generation": "IV.d Children",
+      "description": "Deren Kinder / Their Children (IV.d)",
+      "individuals": [
+        {
+          "id": "IV.d.1",
+          "name": "Eduard Ephraim",
+          "occupation_de": "Pferdehändler",
+          "occupation_en": "Horse Dealer",
+          "location": "Prenzlau",
+          "spouse": "Henriette Neustein",
+          "spouse_origin": "Friedeberg Neumark"
+        },
+        {
+          "id": "IV.d.2",
+          "name": "Antonie Ephraim",
+          "spouse": "Noah Ascher",
+          "location": "Stargard, später Naugard"
+        },
+        {
+          "id": "IV.d.3",
+          "name": "Max Ephraim",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "spouse": "Rudolfine Ahron",
+          "spouse_origin": "Lübz Mecklenburg"
+        },
+        {
+          "id": "IV.d.4",
+          "name": "See IV.a.1",
+          "notes_de": "vergl. IV.a.1.",
+          "notes_en": "cf. IV.a.1."
+        },
+        {
+          "id": "IV.d.5",
+          "name": "Louis Ephraim",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "notes_de": "vergl. IV.a.2.",
+          "notes_en": "cf. IV.a.2."
+        },
+        {
+          "id": "IV.d.6",
+          "name": "Anna Ephraim",
+          "location": "Halberstadt",
+          "spouse": "David Cohnheim"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.1 / IV.d.4 Children",
+      "description": "Deren Kinder / Their Children (IV.a.1 / IV.d.4)",
+      "individuals": [
+        {
+          "id": "IV.a.1.A",
+          "name": "Martha Lehmann",
+          "location": "Berlin",
+          "spouse": "Abraham Hofmann",
+          "spouse_occupation_de": "Buchhändler",
+          "spouse_occupation_en": "Bookseller",
+          "spouse_origin": "Rimpar",
+          "spouse_location": "Frankfurt/Main"
+        },
+        {
+          "id": "IV.a.1.B",
+          "name": "Jenny Lehmann",
+          "location": "Karlsruhe",
+          "spouse": "Sally Koransky",
+          "spouse_occupation_de": "Kaufmann",
+          "spouse_occupation_en": "Merchant"
+        },
+        {
+          "id": "IV.a.1.single1",
+          "name": "Max Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "location": "Genua"
+        },
+        {
+          "id": "IV.a.1.C",
+          "name": "Fanny Lehmann",
+          "location": "Berlin",
+          "spouse": "Isidor Wechsler",
+          "spouse_occupation_de": "Bankier",
+          "spouse_occupation_en": "Banker"
+        },
+        {
+          "id": "IV.a.1.single2",
+          "name": "Marianne Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "notes_de": "jung gestorben",
+          "notes_en": "died young"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2 / IV.d.5 Children",
+      "description": "Deren Kinder / Their Children (IV.a.2 / IV.d.5)",
+      "individuals": [
+        {
+          "id": "IV.a.2.A",
+          "name": "Ernst Lehmann",
+          "death_date": "1866-09"
+        },
+        {
+          "id": "IV.a.2.A_alt",
+          "name": "Anna Lehmann",
+          "birth_date": "1868-02-04",
+          "location": "München",
+          "spouse": "Lothar Feuchtwanger",
+          "spouse_occupation_de": "Bankier",
+          "spouse_occupation_en": "Banker",
+          "spouse_birth_date": "1855-08",
+          "spouse_death_date": "1913"
+        },
+        {
+          "id": "IV.a.2.single",
+          "name": "Margarete Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "birth_year": "1869",
+          "death_year": "1871"
+        },
+        {
+          "id": "IV.a.2.B",
+          "name": "Emil H. Lehmann",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "birth_date": "1870-06-23",
+          "location": "Frankfurt, später Strassburg",
+          "spouse": "Berthly Lang",
+          "spouse_origin": "Baden, Schweiz",
+          "spouse_birth_date": "1860-08"
+        },
+        {
+          "id": "IV.a.2.C",
+          "name": "Else Lehmann",
+          "birth_date": "1873-10-23",
+          "spouse": "Hugo Mainz",
+          "spouse_occupation_de": "Bankier",
+          "spouse_occupation_en": "Banker",
+          "spouse_birth_date": "1864-07-25",
+          "location": "Hamburg"
+        },
+        {
+          "id": "IV.a.2.D",
+          "name": "Paul Lehmann",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "birth_date": "1875-02-13",
+          "spouse": "Bella Appelt",
+          "spouse_birth_year": "1882",
+          "spouse_death_year": "1913",
+          "second_spouse": "Toni Schneller",
+          "location": "Halle, später Dresden"
+        },
+        {
+          "id": "IV.a.2.E",
+          "name": "Dr. med. Felix Lehmann",
+          "birth_date": "1880-06-08",
+          "location": "Nürnberg, später Bensheim, Jerusalem",
+          "spouse": "Meta Lewin",
+          "spouse_origin": "Königsberg",
+          "spouse_birth_date": "1882-07-13"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E Children",
+      "description": "Deren Kinder / Their Children (IV.a.2.E - Felix Lehmann & Meta Lewin)",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1",
+          "name": "Hans Leo Lehmann",
+          "spouse": "Ellen Haas",
+          "spouse_ancestry_ref": "ellen_haas_ancestry"
+        },
+        {
+          "id": "IV.a.2.E.2",
+          "name": "Hermann Lehmann",
+          "birth_year": "1911",
+          "death_year": "1925",
+          "notes_de": "gestorben im Alter von 14",
+          "notes_en": "died age 14"
+        },
+        {
+          "id": "IV.a.2.E.3",
+          "name": "Eli Lehmann",
+          "location": "Beer Sheva",
+          "spouse": "Margit Falk",
+          "spouse_note_en": "2nd marriage",
+          "first_spouse_note": "name unreadable from source"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1 Children",
+      "description": "Deren Kinder / Their Children (IV.a.2.E.1 - Hans Leo Lehmann & Ellen Haas)",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.a",
+          "name": "Hannah Lehmann",
+          "spouse": "Eli Feist"
+        },
+        {
+          "id": "IV.a.2.E.1.b",
+          "name": "Hermann Lehmann",
+          "spouse_note": "unreadable from source"
+        },
+        {
+          "id": "IV.a.2.E.1.c",
+          "name": "Rose Lehmann",
+          "spouse": "Benjamin Sklartz"
+        },
+        {
+          "id": "IV.a.2.E.1.d",
+          "name": "Jonathan Lehmann",
+          "spouse": "Sue Rich",
+          "notes_en": "youngest child"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1.c Children",
+      "description": "Children of Rose Lehmann",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.c.a",
+          "name": "Rutti",
+          "spouse": "Itsik",
+          "location": "Yakir"
+        },
+        {
+          "id": "IV.a.2.E.1.c.b",
+          "name": "Shlomo",
+          "spouse": "Miryam",
+          "location": "Rehovot"
+        },
+        {
+          "id": "IV.a.2.E.1.c.c",
+          "name": "Misha",
+          "spouse": "Tamar",
+          "location": "Jerusalem"
+        },
+        {
+          "id": "IV.a.2.E.1.c.d",
+          "name": "Menachem",
+          "spouse": "Tamar",
+          "location": "Beer sheva"
+        },
+        {
+          "id": "IV.a.2.E.1.c.e",
+          "name": "Chava",
+          "spouse": "Moshe",
+          "location": "Petach Tikva"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1.c.c Children",
+      "description": "Children of Misha",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.c.c.a",
+          "name": "Yedidya"
+        },
+        {
+          "id": "IV.a.2.E.1.c.c.b",
+          "name": "Shilo"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1.d Children",
+      "description": "Their Children (IV.a.2.E.1.d - Jonathan Lehmann & Sue Rich)",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.d.1",
+          "name": "David",
+          "spouse": "Ya-li"
+        },
+        {
+          "id": "IV.a.2.E.1.d.2",
+          "name": "Joshua",
+          "spouse": "Merom"
+        },
+        {
+          "id": "IV.a.2.E.1.d.3",
+          "name": "Talia",
+          "spouse": "Gili"
+        },
+        {
+          "id": "IV.a.2.E.1.d.4",
+          "name": "Daniel",
+          "notes_en": "not listed in original handwritten document",
+          "spouse": "Ruhama Weiss"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1.d.3 Children",
+      "description": "Children of Talia",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.d.3.a",
+          "name": "Yarden"
+        },
+        {
+          "id": "IV.a.2.E.1.d.3.b",
+          "name": "Shahar"
+        },
+        {
+          "id": "IV.a.2.E.1.d.3.c",
+          "name": "Reut"
+        },
+        {
+          "id": "IV.a.2.E.1.d.3.d",
+          "name": "Zeev"
+        },
+        {
+          "id": "IV.a.2.E.1.d.3.e",
+          "name": "Noam"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1.d.2 Children",
+      "description": "Children of Joshua",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.d.2.a",
+          "name": "Maya"
+        },
+        {
+          "id": "IV.a.2.E.1.d.2.b",
+          "name": "Yaron"
+        },
+        {
+          "id": "IV.a.2.E.1.d.2.c",
+          "name": "Idan"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1.d.1 Children",
+      "description": "Children of David",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.d.1.a",
+          "name": "Elisha Shmuel",
+          "birth_year": "2012"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.1.d.4 Children",
+      "description": "Children of Daniel",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.1.d.4.a",
+          "name": "Avital",
+          "birth_year": "2010"
+        },
+        {
+          "id": "IV.a.2.E.1.d.4.b",
+          "name": "Netanel",
+          "birth_year": "2012"
+        },
+        {
+          "id": "IV.a.2.E.1.d.4.c",
+          "name": "Yedidya",
+          "birth_year": "2014"
+        },
+        {
+          "id": "IV.a.2.E.1.d.4.d",
+          "name": "Tuvya",
+          "birth_year": "2017"
+        },
+        {
+          "id": "IV.a.2.E.1.d.4.e",
+          "name": "Miryam",
+          "birth_year": "2021"
+        },
+        {
+          "id": "IV.a.2.E.1.d.4.f",
+          "name": "Ayala",
+          "birth_year": "2023"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.2.E.3 Children",
+      "description": "Their Children (IV.a.2.E.3 - Eli Lehmann)",
+      "individuals": [
+        {
+          "id": "IV.a.2.E.3.a",
+          "name": "Daniela",
+          "notes_en": "from first marriage"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.3 Children",
+      "description": "Deren Kinder / Their Children (IV.a.3)",
+      "individuals": [
+        {
+          "id": "IV.a.3.A",
+          "name": "Martin Hirschfeld",
+          "occupation_de": "Bankier",
+          "occupation_en": "Banker",
+          "location": "Berlin",
+          "spouse": "Julchen Cronheim"
+        },
+        {
+          "id": "IV.a.3.B",
+          "name": "Johanna Hirschfeld",
+          "location": "Berlin",
+          "spouse": "Alfred Friedeberg",
+          "spouse_occupation_de": "Bankier",
+          "spouse_occupation_en": "Banker"
+        },
+        {
+          "id": "IV.a.3.C",
+          "name": "Lydia Lotte Hirschfeld",
+          "location": "Berlin",
+          "spouse": "Magnus Greifenberg"
+        },
+        {
+          "id": "IV.a.3.D",
+          "name": "Felix Hirschfeld"
+        },
+        {
+          "id": "IV.a.3.E",
+          "name": "Eduard Hirschfeld"
+        },
+        {
+          "id": "IV.a.3.F",
+          "name": "Leo Hirschfeld"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.4 Children",
+      "description": "Deren Kinder / Their Children (IV.a.4)",
+      "individuals": [
+        {
+          "id": "IV.a.4.A",
+          "name": "Martin Cohn",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "spouse": "Selma Kahn",
+          "location": "Berlin",
+          "status_de": "Geschieden",
+          "status_en": "Divorced"
+        },
+        {
+          "id": "IV.a.4.B",
+          "name": "William Cohn",
+          "status_de": "verstorben",
+          "status_en": "deceased",
+          "location": "Bremerhaven",
+          "spouse": "Selma Nachum"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.5 Children",
+      "description": "Deren Kinder / Their Children (IV.a.5)",
+      "individuals": [
+        {
+          "id": "IV.a.5.A",
+          "name": "Margarete Lehmann",
+          "notes_de": "getauft",
+          "notes_en": "baptized"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.6 Children",
+      "description": "Deren Kinder / Their Children (IV.a.6)",
+      "individuals": [
+        {
+          "id": "IV.a.6.A",
+          "name": "Martha Lehmann",
+          "location": "Berlin",
+          "spouse": "Hermann Behrendt",
+          "spouse_occupation_de": "Kaufmann",
+          "spouse_occupation_en": "Merchant"
+        },
+        {
+          "id": "IV.a.6.B",
+          "name": "Elsbeth Lehmann",
+          "location": "Potsdam",
+          "spouse": "Wilhelm Lehmann",
+          "spouse_occupation_de": "Fabrikant",
+          "spouse_occupation_en": "Manufacturer",
+          "spouse_status_de": "verstorben",
+          "spouse_status_en": "deceased"
+        },
+        {
+          "id": "IV.a.6.C",
+          "name": "Paula Lehmann",
+          "location": "Berlin",
+          "spouse": "Sigmund Baer"
+        },
+        {
+          "id": "IV.a.6.D",
+          "name": "Lilly Lehmann",
+          "location": "Berlin",
+          "spouse": "Edgar Caro"
+        },
+        {
+          "id": "IV.a.6.E",
+          "name": "Eduard Lehmann",
+          "location": "Potsdam",
+          "spouse": "Margarete Alexander"
+        }
+      ]
+    },
+    {
+      "generation": "IV.a.7 Children",
+      "description": "Deren Kinder / Their Children (IV.a.7)",
+      "individuals": [
+        {
+          "id": "IV.a.7.single1",
+          "name": "Martin Borchart",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "location": "Schievelbein"
+        },
+        {
+          "id": "IV.a.7.A",
+          "name": "Eduard Borchart",
+          "location": "Schievelbein",
+          "spouse": "Rosa Neustein",
+          "spouse_origin": "Dessau"
+        },
+        {
+          "id": "IV.a.7.single2",
+          "name": "Georg Borchart",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried"
+        },
+        {
+          "id": "IV.a.7.B",
+          "name": "Anna Borchart",
+          "location": "Berlin",
+          "spouse": "Joseph Löwenstein",
+          "spouse_status_de": "verstorben",
+          "spouse_status_en": "deceased"
+        }
+      ]
+    },
+    {
+      "generation": "IV.b.2 Children",
+      "description": "Deren Kinder / Their Children (IV.b.2)",
+      "individuals": [
+        {
+          "id": "IV.b.2.A",
+          "name": "Martha Meyer",
+          "location": "Berlin",
+          "spouse": "Noah Moses",
+          "spouse_occupation_de": "Kaufmann",
+          "spouse_occupation_en": "Merchant"
+        },
+        {
+          "id": "IV.b.2.B",
+          "name": "Eugen Meyer",
+          "occupation_de": "Jurist",
+          "occupation_en": "Lawyer / Jurist",
+          "notes_de": "getauft",
+          "notes_en": "baptized"
+        },
+        {
+          "id": "IV.b.2.single",
+          "name": "Toni Meyer",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried"
+        }
+      ]
+    },
+    {
+      "generation": "IV.b.3 Children",
+      "description": "Deren Kinder / Their Children (IV.b.3)",
+      "individuals": [
+        {
+          "id": "IV.b.3.single1",
+          "name": "Ernst Lehmann",
+          "notes_de": "jung verstorben",
+          "notes_en": "died young"
+        },
+        {
+          "id": "IV.b.3.A",
+          "name": "Gustav Lehmann",
+          "birth_year": "1856",
+          "death_year": "1866",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Altona",
+          "spouse": "Dora Philipp",
+          "spouse_location": "Altona"
+        },
+        {
+          "id": "IV.b.3.B",
+          "name": "Ludwig Lehmann",
+          "occupation_de": "Bankier",
+          "occupation_en": "Banker",
+          "status_de": "verstorben",
+          "status_en": "deceased",
+          "spouse": "Franziska Rosenbaum",
+          "spouse_status_de": "verstorben",
+          "spouse_status_en": "deceased"
+        },
+        {
+          "id": "IV.b.3.C",
+          "name": "Max Lehmann",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Berlin",
+          "spouse": "Jenny Wolfenstein",
+          "spouse_location": "Berlin"
+        },
+        {
+          "id": "IV.b.3.single2",
+          "name": "Edmund Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "notes_de": "ertrunken",
+          "notes_en": "drowned"
+        }
+      ]
+    },
+    {
+      "generation": "IV.b.5 Children",
+      "description": "Deren Kinder / Their Children (IV.b.5)",
+      "individuals": [
+        {
+          "id": "IV.b.5.A",
+          "name": "Max Meyer",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "spouse": "Elsa Moses",
+          "location": "Berlin"
+        },
+        {
+          "id": "IV.b.5.B",
+          "name": "Ludwig Meyer",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Berlin"
+        },
+        {
+          "id": "IV.b.5.C",
+          "name": "Erich Meyer",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Berlin"
+        }
+      ]
+    },
+    {
+      "generation": "IV.c.1 Children",
+      "description": "Deren Kinder / Their Children (IV.c.1)",
+      "individuals": [
+        {
+          "id": "IV.c.1.A",
+          "name": "Artur Lehmann",
+          "occupation_de": "Leder",
+          "occupation_en": "Leather Merchant",
+          "notes_de": "(1914-18)",
+          "notes_en": "(1914-18)",
+          "spouse": "Paula Schweriner",
+          "location": "Berlin"
+        },
+        {
+          "id": "IV.c.1.B",
+          "name": "Rosalie Lehmann",
+          "location": "Sondershausen",
+          "spouse": "Hermann Redelmeyer",
+          "spouse_occupation_de": "Kaufmann",
+          "spouse_occupation_en": "Merchant"
+        },
+        {
+          "id": "IV.c.1.C",
+          "name": "Helene Lehmann",
+          "location": "Magdeburg",
+          "spouse": "Dr. Moritz Spanier",
+          "spouse_occupation_de": "Oberlehrer",
+          "spouse_occupation_en": "Senior Teacher"
+        },
+        {
+          "id": "IV.c.1.D",
+          "name": "Moritz Lehmann",
+          "occupation_de": "Leder",
+          "occupation_en": "Leather Merchant",
+          "location": "Berlin",
+          "spouse": "Jenny Müller"
+        },
+        {
+          "id": "IV.c.1.E",
+          "name": "Eli Lehmann (Emin Pascha)",
+          "spouse": "Alice Schnitzer",
+          "location": "Berlin"
+        },
+        {
+          "id": "IV.c.1.F",
+          "name": "Gotthold Lehmann",
+          "location": "Pasewalk",
+          "spouse": "Rosa Josephson"
+        },
+        {
+          "id": "IV.c.1.G",
+          "name": "Paula Lehmann",
+          "spouse": "Leo Packscher",
+          "spouse_occupation_de": "Rechtsanwalt",
+          "spouse_occupation_en": "Lawyer / Attorney",
+          "location": "Berlin"
+        },
+        {
+          "id": "IV.c.1.H",
+          "name": "Leo Lehmann",
+          "occupation_de": "Bankdirektor",
+          "occupation_en": "Bank Director",
+          "location": "Essen / Hildesheim",
+          "spouse": "Hedwig Freudenberg"
+        },
+        {
+          "id": "IV.c.1.I",
+          "name": "Martha Lehmann",
+          "location": "Berlin",
+          "spouse": "Max Hirschberg"
+        }
+      ]
+    },
+    {
+      "generation": "IV.c.3 Children",
+      "description": "Deren Kinder / Their Children (IV.c.3)",
+      "individuals": [
+        {
+          "id": "IV.c.3.A",
+          "name": "Eugen Lichenheim",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Hamburg",
+          "spouse": "Fanny Gower"
+        },
+        {
+          "id": "IV.c.3.single1",
+          "name": "Max Lichenheim",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried"
+        },
+        {
+          "id": "IV.c.3.B",
+          "name": "Louis Lichenheim",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "location": "Ribnitz Mecklenburg",
+          "spouse": "Sussy Lichenheim"
+        },
+        {
+          "id": "IV.c.3.single2",
+          "name": "Gustav Lichenheim",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "occupation_de": "Papierhändler",
+          "occupation_en": "Paper Merchant"
+        },
+        {
+          "id": "IV.c.3.C",
+          "name": "Martha Lichenheim",
+          "location": "Kolberg",
+          "spouse": "Hermann Beer"
+        }
+      ]
+    },
+    {
+      "generation": "IV.c.4 Children",
+      "description": "Deren Kinder / Their Children (IV.c.4)",
+      "individuals": [
+        {
+          "id": "IV.c.4.A",
+          "name": "Max Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "location": "Lima, Peru"
+        },
+        {
+          "id": "IV.c.4.B",
+          "name": "Ferdinand Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "status_de": "verstorben",
+          "status_en": "deceased",
+          "location": "Hamburg"
+        },
+        {
+          "id": "IV.c.4.C",
+          "name": "Paul Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "location": "Breslau"
+        },
+        {
+          "id": "IV.c.4.D",
+          "name": "Marianne Lehmann",
+          "marital_status_de": "unverheiratet",
+          "marital_status_en": "unmarried",
+          "location": "Hamburg"
+        }
+      ]
+    },
+    {
+      "generation": "IV.d.1 Children",
+      "description": "Deren Kinder / Their Children (IV.d.1)",
+      "individuals": [
+        {
+          "id": "IV.d.1.A",
+          "name": "Jenny Ephraim",
+          "location": "Berlin",
+          "spouse": "Max Goldstaub",
+          "spouse_occupation_de": "Möbelhändler",
+          "spouse_occupation_en": "Furniture Dealer"
+        },
+        {
+          "id": "IV.d.1.B",
+          "name": "Ernst Ephraim",
+          "spouse": "Rosa Adler",
+          "spouse_origin": "Breslau"
+        },
+        {
+          "id": "IV.d.1.C",
+          "name": "Frieda Ephraim",
+          "location": "Halle a/S",
+          "spouse": "Willy Salomon"
+        },
+        {
+          "id": "IV.d.1.D",
+          "name": "Gustav Ephraim",
+          "notes_de": "verschollen in Kobe, Japan",
+          "notes_en": "missing/lost in Kobe, Japan"
+        },
+        {
+          "id": "IV.d.1.E",
+          "name": "Else Ephraim",
+          "location": "Schlochau/Posen",
+          "spouse": "Alexander Hoffmann"
+        }
+      ]
+    },
+    {
+      "generation": "IV.d.2 Children",
+      "description": "Deren Kinder / Their Children (IV.d.2)",
+      "individuals": [
+        {
+          "id": "IV.d.2.A",
+          "name": "Ernst Ascher",
+          "occupation_de": "Kaufmann",
+          "occupation_en": "Merchant",
+          "spouse": "Jenny Hochschild",
+          "location": "Frankfurt/Main"
+        }
+      ]
+    },
+    {
+      "generation": "IV.d.3 Children",
+      "description": "Deren Kinder / Their Children (IV.d.3)",
+      "individuals": [
+        {
+          "id": "IV.d.3.A",
+          "name": "Anna Ephraim",
+          "location": "Berlin",
+          "spouse": "Alexander Neumann",
+          "spouse_status_de": "verstorben",
+          "spouse_status_en": "deceased"
+        },
+        {
+          "id": "IV.d.3.B",
+          "name": "Elsbeth Ephraim",
+          "location": "Berlin",
+          "spouse": "Max Rothschild",
+          "spouse_occupation_de": "Lehrer",
+          "spouse_occupation_en": "Teacher"
+        },
+        {
+          "id": "IV.d.3.C",
+          "name": "Adolph Ephraim",
+          "occupation_de": "Konfektion",
+          "occupation_en": "Garments / Tailoring",
+          "location": "Berlin"
+        },
+        {
+          "id": "IV.d.3.D",
+          "name": "Margarete Ephraim",
+          "location": "Berlin",
+          "spouse": "Erich Friedländer"
+        }
+      ]
+    }
+  ],
+  "non_descendant_ancestry": [
+    {
+      "id": "meta_lewin_ancestry",
+      "description": "Ancestry of Meta Lewin (wife of Dr. Felix Lehmann) - not descendants of Michael Ephraim Lehmann",
+      "connected_to": "IV.a.2.E (spouse)",
+      "father": {
+        "name": "Abraham Isaac Levin",
+        "name_confidence": "low - partially unreadable from handwritten source"
+      },
+      "mother": {
+        "name": null,
+        "name_note": "unreadable from source"
+      },
+      "children_count": 6,
+      "children_note": "6 children listed; 3rd and 6th have descendants shown. Meta Lewin is one of the six. Names unreadable from handwritten source."
+    },
+    {
+      "id": "ellen_haas_ancestry",
+      "description": "Ancestry of Ellen Haas (wife of Hans Leo Lehmann) - not descendants of Michael Ephraim Lehmann",
+      "connected_to": "IV.a.2.E.1 (spouse)",
+      "father": {
+        "name": null,
+        "name_note": "unreadable from source"
+      },
+      "mother": {
+        "name": null,
+        "name_note": "unreadable from source"
+      },
+      "siblings_note": "siblings listed but names unreadable from handwritten source"
+    }
+  ],
+  "historical_document": {
+    "title_de": "Bürgerbrief für den Kaufmann Michael Ephraim Lehmann",
+    "title_en": "Citizenship Certificate for the Merchant Michael Ephraim Lehmann",
+    "date": "1815-04-17",
+    "location": "Wrietzen a/O",
+    "seal_stamp": "Acht G. Groschen",
+    "content_de": "Der Magistrat der Königl. Preuss. Stadt Wrietzen a/O thut kund und bekennt hierdurch, dass der jüdische Kaufmann Michael Ephraim Lehmann, nachdem er die nöthigen Erfordernisse nachgewiesen hat, seinem Ansuchen gemäss zum Bürger hiesiger Stadt angenommen worden ist...",
+    "content_en": "The Magistrate of the Royal Prussian City of Wrietzen on the Oder hereby makes known and acknowledges that the Jewish merchant Michael Ephraim Lehmann, having demonstrated the necessary requirements, has been accepted as a citizen of this city in accordance with his request..."
+  }
+}

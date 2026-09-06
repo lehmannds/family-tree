@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lehmann Family Tree - Interactive Zoom & Pan</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --node-bg: #ffffff;
+            --node-border: #cbd5e1;
+            --node-accent: #1e3a8a;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --line-color: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 10px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--node-border);
+        }
+
+        h1 {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--node-accent);
+        }
+
+        .controls {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--node-accent);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .zoom-btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            font-size: 1.1rem;
+        }
+
+        .zoom-level {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-sub);
+            min-width: 45px;
+            text-align: center;
+        }
+
+        /* Viewport and Canvas setup for Pan/Zoom */
+        #viewport {
+            width: 100vw;
+            height: 100vh;
+            cursor: grab;
+            overflow: hidden;
+            position: relative;
+            background-radial: circle, #e2e8f0 1px, transparent 1px;
+            background-size: 20px 20px;
+        }
+
+        #viewport:active {
+            cursor: grabbing;
+        }
+
+        #canvas {
+            position: absolute;
+            transform-origin: 0 0;
+            padding: 120px;
+            display: inline-block;
+        }
+
+        /* Tree hierarchy structure */
+        .tf-tree {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .tf-tree ul {
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            position: relative;
+            margin: 0;
+            padding-left: 0;
+            list-style-type: none;
+        }
+
+        .tf-tree li {
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 6px 0 6px;
+        }
+
+        /* Connecting lines */
+        .tf-tree li::before, .tf-tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 2px solid var(--line-color);
+            width: 50%;
+            height: 20px;
+        }
+
+        .tf-tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 2px solid var(--line-color);
+        }
+
+        .tf-tree li:only-child::after, .tf-tree li:only-child::before {
+            display: none;
+        }
+
+        .tf-tree li:only-child {
+            padding-top: 0;
+        }
+
+        .tf-tree li:first-child::before, .tf-tree li:last-child::after {
+            border: none;
+        }
+
+        .tf-tree li:last-child::before {
+            border-right: 2px solid var(--line-color);
+            border-radius: 0 5px 0 0;
+        }
+
+        .tf-tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+        }
+
+        .tf-tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 2px solid var(--line-color);
+            width: 0;
+            height: 20px;
+        }
+
+        /* Node Box Styling */
+        .tf-nc {
+            border: 1px solid var(--node-border);
+            background-color: var(--node-bg);
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            text-align: left;
+            min-width: 140px;
+            max-width: 220px;
+            white-space: normal;
+            vertical-align: top;
+            position: relative;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .tf-nc:hover {
+            border-color: var(--node-accent);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        .id-tag {
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--node-accent);
+            background: #dbeafe;
+            padding: 2px 5px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .name {
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .meta {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-top: 4px;
+            line-height: 1.25;
+        }
+
+        .spouse {
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px dashed var(--node-border);
+            font-size: 0.75rem;
+            color: #1e293b;
+        }
+
+        .collapsed ul {
+            display: none !important;
+        }
+
+        .has-children > .tf-nc::after {
+            content: '▼';
+            font-size: 0.6rem;
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            color: var(--text-sub);
+        }
+
+        .collapsed.has-children > .tf-nc::after {
+            content: '▶';
+        }
+
+        /* Edit buttons on nodes */
+        .node-actions {
+            margin-top: 6px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .node-btn {
+            background: var(--node-accent);
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .node-btn:hover { opacity: 0.85; }
+        .node-btn.add { background: #e67e22; }
+
+        /* Save bar */
+        .save-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--node-accent);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+        }
+
+        .save-bar.visible { transform: translateY(0); }
+
+        .save-bar button {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+
+        .save-bar .btn-save { background: #28a745; }
+        .save-bar .btn-discard { background: #dc3545; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            min-width: 320px;
+            max-width: 90vw;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal h3 { margin: 0 0 16px 0; color: var(--node-accent); }
+
+        .modal label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-sub);
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--node-border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .modal-actions button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .modal-actions .btn-cancel { background: #dc3545; }
+        .modal-actions .btn-confirm { background: #28a745; }
+
+        /* Print styles */
+        @media print {
+            @page {
+                size: landscape;
+                margin: 5mm;
+            }
+
+            body {
+                overflow: visible;
+                width: auto;
+                height: auto;
+                background: white;
+            }
+
+            header, .save-bar, .modal-overlay, .node-actions {
+                display: none !important;
+            }
+
+            #viewport {
+                overflow: visible;
+                width: auto;
+                height: auto;
+                cursor: default;
+            }
+
+            #canvas {
+                position: static;
+                transform: none !important;
+                padding: 10px;
+                display: block;
+            }
+
+            .tf-tree {
+                display: block;
+                white-space: nowrap;
+            }
+
+            .tf-nc {
+                border: 1px solid #999;
+                box-shadow: none;
+                font-size: 7pt;
+                padding: 3px 5px;
+                min-width: 70px;
+                max-width: 130px;
+            }
+
+            .tf-nc:hover {
+                border-color: #999;
+                box-shadow: none;
+            }
+
+            .tf-tree li {
+                padding: 14px 3px 0 3px;
+            }
+
+            .tf-tree ul { padding-top: 14px; }
+            .tf-tree ul ul::before { height: 14px; }
+            .tf-tree li::before, .tf-tree li::after { height: 14px; }
+
+            .id-tag { font-size: 5pt; padding: 1px 3px; }
+            .name { font-size: 7pt; }
+            .meta { font-size: 6pt; margin-top: 2px; }
+            .spouse { font-size: 6pt; margin-top: 2px; padding-top: 2px; }
+
+            .collapsed ul {
+                display: flex !important;
+            }
+
+            .has-children > .tf-nc::after,
+            .collapsed.has-children > .tf-nc::after {
+                display: none;
+            }
+        }
+
+        /* Print preview mode - applied via JS before printing */
+        body.print-mode {
+            overflow: visible;
+            width: auto;
+            height: auto;
+        }
+
+        body.print-mode header { display: none; }
+        body.print-mode .save-bar { display: none; }
+        body.print-mode .node-actions { display: none; }
+
+        body.print-mode #viewport {
+            overflow: visible;
+            width: auto;
+            height: auto;
+        }
+
+        body.print-mode #canvas {
+            position: static;
+            transform: none !important;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="app-title">Lehmann Family Tree</h1>
+    <div class="controls">
+        <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
+        <span class="zoom-level" id="zoom-indicator">100%</span>
+        <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+        <button onclick="resetZoom()" title="Reset View">Fit / Center</button>
+        <button onclick="toggleLang()">Lang: <span id="lang-label">EN</span></button>
+        <button onclick="toggleAll()">Expand / Collapse</button>
+        <button onclick="printTree()">📥 Export HTML</button>
+    </div>
+</header>
+
+<div id="viewport">
+    <div id="canvas">
+        <div class="tf-tree" id="tree-root"></div>
+    </div>
+</div>
+
+<div class="save-bar" id="save-bar">
+    <span id="save-status">Unsaved changes</span>
+    <div style="display:flex;gap:8px;">
+        <button class="btn-discard" onclick="discardChanges()">Discard</button>
+        <button class="btn-save" onclick="saveChanges()">Save Changes</button>
+    </div>
+</div>
+
+<script>
+let currentLang = 'en';
+let allExpanded = true;
+let jsonData = null;
+let hasChanges = false;
+
+// Pan / Zoom variables
+let scale = 0.85;
+let pointX = 50;
+let pointY = 100;
+let startX = 0;
+let startY = 0;
+let isPanning = false;
+
+const viewport = document.getElementById('viewport');
+const canvas = document.getElementById('canvas');
+const zoomIndicator = document.getElementById('zoom-indicator');
+
+let treeData = null;
+
+function personToNode(person) {
+    return {
+        id: person.id,
+        name: person.name,
+        birth: person.birth_year || (person.birth_date ? person.birth_date.split('-')[0] : ''),
+        loc: person.location || '',
+        occ_de: person.occupation_de || '',
+        occ_en: person.occupation_en || '',
+        spouse: person.spouse || '',
+        notes_de: person.marital_status_de || person.notes_de || '',
+        notes_en: person.marital_status_en || person.notes_en || '',
+        children: []
+    };
+}
+
+function buildNestedTree(json) {
+    const generations = json.generations;
+    const nodeMap = {};
+
+    generations.forEach(gen => {
+        gen.individuals.forEach(person => {
+            nodeMap[person.id] = personToNode(person);
+        });
+    });
+
+    const parentChildMap = {
+        'I.1': ['II.1'],
+        'II.1': ['III.1'],
+        'III.1': ['IV.a', 'IV.b', 'IV.c', 'IV.c.single', 'IV.d'],
+        'IV.a': generations.find(g => g.generation === 'IV.a Children')?.individuals.map(p => p.id) || [],
+        'IV.b': generations.find(g => g.generation === 'IV.b Children')?.individuals.map(p => p.id) || [],
+        'IV.c': generations.find(g => g.generation === 'IV.c Children')?.individuals.map(p => p.id) || [],
+        'IV.d': generations.find(g => g.generation === 'IV.d Children')?.individuals.map(p => p.id) || [],
+    };
+
+    generations.forEach(gen => {
+        const match = gen.generation.match(/^([\w.]+)\s*Children$/);
+        if (match) {
+            const parentId = match[1].trim();
+            parentChildMap[parentId] = gen.individuals.map(p => p.id);
+        }
+        const match2 = gen.generation.match(/^([\w.]+)\s*\/\s*[\w.]+\s*Children$/);
+        if (match2) {
+            const parentId = match2[1].trim();
+            parentChildMap[parentId] = gen.individuals.map(p => p.id);
+        }
+    });
+
+    function attachChildren(node) {
+        const childIds = parentChildMap[node.id];
+        if (childIds) {
+            node.children = childIds
+                .filter(id => nodeMap[id])
+                .map(id => {
+                    const child = nodeMap[id];
+                    attachChildren(child);
+                    return child;
+                });
+        }
+        return node;
+    }
+
+    const root = nodeMap['I.1'];
+    attachChildren(root);
+    return root;
+}
+
+async function loadTreeData() {
+    const response = await fetch('family_tree_base.json');
+    jsonData = await response.json();
+    document.getElementById('app-title').textContent = jsonData.document_title || 'Lehmann Family Tree';
+    rebuildTree();
+}
+
+function rebuildTree() {
+    treeData = buildNestedTree(jsonData);
+    renderTree(false);
+}
+
+function markDirty() {
+    hasChanges = true;
+    document.getElementById('save-bar').classList.add('visible');
+}
+
+function updateTransform() {
+    canvas.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+    zoomIndicator.innerText = `${Math.round(scale * 100)}%`;
+}
+
+function zoomIn() {
+    scale = Math.min(scale * 1.2, 2.5);
+    updateTransform();
+}
+
+function zoomOut() {
+    scale = Math.max(scale / 1.2, 0.15);
+    updateTransform();
+}
+
+function resetZoom() {
+    scale = 0.65;
+    const viewportWidth = viewport.clientWidth;
+    const canvasWidth = canvas.clientWidth * scale;
+    pointX = Math.max((viewportWidth - canvasWidth) / 2, 20);
+    pointY = 100;
+    updateTransform();
+}
+
+// Pan & Drag Handlers
+viewport.addEventListener('mousedown', (e) => {
+    if (e.target.closest('header') || e.target.closest('.tf-nc')) return;
+    isPanning = true;
+    startX = e.clientX - pointX;
+    startY = e.clientY - pointY;
+});
+
+window.addEventListener('mousemove', (e) => {
+    if (!isPanning) return;
+    e.preventDefault();
+    pointX = e.clientX - startX;
+    pointY = e.clientY - startY;
+    updateTransform();
+});
+
+window.addEventListener('mouseup', () => {
+    isPanning = false;
+});
+
+// Wheel Zoom Handler
+viewport.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const xs = (e.clientX - pointX) / scale;
+    const ys = (e.clientY - pointY) / scale;
+    const delta = -e.deltaY;
+
+    if (delta > 0) {
+        scale = Math.min(scale * 1.1, 2.5);
+    } else {
+        scale = Math.max(scale / 1.1, 0.15);
+    }
+
+    pointX = e.clientX - xs * scale;
+    pointY = e.clientY - ys * scale;
+    updateTransform();
+}, { passive: false });
+
+// Touch Panning & Pinching for Mobile
+let touchStartDist = 0;
+
+viewport.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+        if (e.target.closest('header') || e.target.closest('.tf-nc')) return;
+        isPanning = true;
+        startX = e.touches[0].clientX - pointX;
+        startY = e.touches[0].clientY - pointY;
+    } else if (e.touches.length === 2) {
+        isPanning = false;
+        touchStartDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+        );
+    }
+});
+
+viewport.addEventListener('touchmove', (e) => {
+    if (isPanning && e.touches.length === 1) {
+        pointX = e.touches[0].clientX - startX;
+        pointY = e.touches[0].clientY - startY;
+        updateTransform();
+    } else if (e.touches.length === 2) {
+        const dist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+        );
+        const factor = dist / touchStartDist;
+        scale = Math.min(Math.max(scale * factor, 0.15), 2.5);
+        touchStartDist = dist;
+        updateTransform();
+    }
+});
+
+viewport.addEventListener('touchend', () => {
+    isPanning = false;
+});
+
+// Tree Building HTML Logic
+function buildTreeHTML(node) {
+    const hasChildren = node.children && node.children.length > 0;
+    const occ = currentLang === 'de' ? (node.occ_de || '') : (node.occ_en || '');
+    const escapedId = node.id.replace(/'/g, "\\'");
+
+    let html = `<li class="${hasChildren ? 'has-children' : ''}">`;
+    html += `<div class="tf-nc" onclick="toggleNode(event, this)">`;
+    html += `<span class="id-tag">${node.id}</span>`;
+    html += `<div class="name">${node.name}</div>`;
+
+    if (node.birth || node.loc || occ) {
+        html += `<div class="meta">`;
+        if (node.birth) html += `<div><sup>*</sup>${node.birth}</div>`;
+        if (node.loc) html += `<div>📍 ${node.loc}</div>`;
+        if (occ) html += `<div>💼 ${occ}</div>`;
+        html += `</div>`;
+    }
+
+    if (node.spouse) {
+        html += `<div class="spouse">💍 ${node.spouse}</div>`;
+    }
+
+    html += `<div class="node-actions">`;
+    html += `<button class="node-btn" onclick="event.stopPropagation(); editNodeName('${escapedId}')">✏️ Edit</button>`;
+    html += `<button class="node-btn add" onclick="event.stopPropagation(); addChildToNode('${escapedId}')">+ Child</button>`;
+    html += `</div>`;
+
+    html += `</div>`;
+
+    if (hasChildren) {
+        html += `<ul>`;
+        node.children.forEach(child => {
+            html += buildTreeHTML(child);
+        });
+        html += `</ul>`;
+    }
+
+    html += `</li>`;
+    return html;
+}
+
+function renderTree(shouldResetZoom = true) {
+    if (!treeData) return;
+    const rootContainer = document.getElementById('tree-root');
+    rootContainer.innerHTML = `<ul>${buildTreeHTML(treeData)}</ul>`;
+    if (shouldResetZoom) setTimeout(resetZoom, 50);
+    else updateTransform();
+}
+
+function toggleNode(event, element) {
+    event.stopPropagation();
+    if (event.target.closest('.node-btn')) return;
+    const parentLi = element.parentElement;
+    if (parentLi.classList.contains('has-children')) {
+        parentLi.classList.toggle('collapsed');
+    }
+}
+
+function toggleLang() {
+    currentLang = currentLang === 'de' ? 'en' : 'de';
+    document.getElementById('lang-label').innerText = currentLang.toUpperCase();
+    rebuildTree();
+}
+
+function toggleAll() {
+    allExpanded = !allExpanded;
+    const nodes = document.querySelectorAll('.tf-tree li.has-children');
+    nodes.forEach(node => {
+        if (allExpanded) {
+            node.classList.remove('collapsed');
+        } else {
+            node.classList.add('collapsed');
+        }
+    });
+}
+
+// --- Editing Functions ---
+
+function findPersonInJson(personId) {
+    for (const gen of jsonData.generations) {
+        const person = gen.individuals.find(p => p.id === personId);
+        if (person) return { person, gen };
+    }
+    return null;
+}
+
+function editNodeName(personId) {
+    const result = findPersonInJson(personId);
+    if (!result) return;
+    const { person } = result;
+
+    const birthValue = person.birth_date || person.birth_year || '';
+
+    showModal('Edit Person', [
+        { label: 'ID', key: 'id', value: person.id, readonly: true },
+        { label: 'Name', key: 'name', value: person.name },
+        { label: 'Birth (year or date)', key: 'birth', value: birthValue },
+        { label: 'Spouse', key: 'spouse', value: person.spouse || '' },
+        { label: 'Location', key: 'location', value: person.location || '' }
+    ], (values) => {
+        let changed = false;
+        if (values.name && values.name !== person.name) {
+            person.name = values.name;
+            changed = true;
+        }
+        const oldBirth = person.birth_date || person.birth_year || '';
+        if (values.birth !== oldBirth) {
+            if (values.birth && values.birth.includes('-')) {
+                person.birth_date = values.birth;
+                delete person.birth_year;
+            } else if (values.birth) {
+                person.birth_year = values.birth;
+                delete person.birth_date;
+            } else {
+                delete person.birth_year;
+                delete person.birth_date;
+            }
+            changed = true;
+        }
+        if (values.spouse !== (person.spouse || '')) {
+            if (values.spouse) person.spouse = values.spouse;
+            else delete person.spouse;
+            changed = true;
+        }
+        if (values.location !== (person.location || '')) {
+            if (values.location) person.location = values.location;
+            else delete person.location;
+            changed = true;
+        }
+        if (changed) {
+            markDirty();
+            rebuildTree();
+        }
+    });
+}
+
+function addChildToNode(parentId) {
+    const result = findPersonInJson(parentId);
+    if (!result) return;
+    const { person, gen } = result;
+
+    const childGenName = `${parentId} Children`;
+    let childGen = jsonData.generations.find(g => g.generation === childGenName);
+    if (!childGen) {
+        childGen = jsonData.generations.find(g => g.generation.startsWith(parentId + ' ') && g.generation.endsWith('Children'));
+    }
+    if (!childGen) {
+        childGen = jsonData.generations.find(g => g.generation.includes(parentId) && g.generation.endsWith('Children'));
+    }
+
+    const existingChildren = childGen ? childGen.individuals : [];
+    const nextLetter = String.fromCharCode(97 + existingChildren.length);
+    const suggestedId = `${parentId}.${nextLetter}`;
+
+    showModal(`Add Child of ${person.name}`, [
+        { label: 'Child ID', key: 'id', value: suggestedId },
+        { label: 'Name', key: 'name', value: '' },
+        { label: 'Spouse (optional)', key: 'spouse', value: '' },
+        { label: 'Location (optional)', key: 'location', value: '' },
+        { label: 'Birth Year (optional)', key: 'birth_year', value: '' }
+    ], (values) => {
+        if (!values.name) { alert('Name is required'); return; }
+
+        const newPerson = { id: values.id, name: values.name };
+        if (values.spouse) newPerson.spouse = values.spouse;
+        if (values.location) newPerson.location = values.location;
+        if (values.birth_year) newPerson.birth_year = values.birth_year;
+
+        if (childGen) {
+            childGen.individuals.push(newPerson);
+        } else {
+            const genIdx = jsonData.generations.indexOf(gen);
+            jsonData.generations.splice(genIdx + 1, 0, {
+                generation: childGenName,
+                description: `Children of ${person.name}`,
+                individuals: [newPerson]
+            });
+        }
+
+        markDirty();
+        rebuildTree();
+    });
+}
+
+// --- Modal ---
+
+function showModal(title, fields, onConfirm) {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+
+    let fieldsHtml = fields.map(f => {
+        const readonly = f.readonly ? 'readonly style="background:#eee;"' : '';
+        return `
+            <label>${f.label}</label>
+            <input type="text" id="modal-${f.key}" value="${(f.value || '').replace(/"/g, '&quot;')}" ${readonly}>
+        `;
+    }).join('');
+
+    overlay.innerHTML = `
+        <div class="modal">
+            <h3>${title}</h3>
+            ${fieldsHtml}
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+                <button class="btn-confirm" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    overlay.querySelector('#modal-confirm').onclick = () => {
+        const values = {};
+        fields.forEach(f => {
+            values[f.key] = document.getElementById(`modal-${f.key}`).value.trim();
+        });
+        overlay.remove();
+        onConfirm(values);
+    };
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.remove();
+    });
+
+    const firstInput = overlay.querySelector('input:not([readonly])');
+    if (firstInput) setTimeout(() => firstInput.focus(), 50);
+}
+
+// --- Save / Discard ---
+
+async function saveChanges() {
+    document.getElementById('save-status').textContent = 'Saving...';
+    try {
+        const response = await fetch('/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jsonData)
+        });
+        const result = await response.json();
+        if (result.status === 'ok') {
+            hasChanges = false;
+            document.getElementById('save-bar').classList.remove('visible');
+        } else {
+            alert('Save failed: ' + result.message);
+            document.getElementById('save-status').textContent = 'Save failed!';
+        }
+    } catch (e) {
+        alert('Save failed: ' + e.message);
+        document.getElementById('save-status').textContent = 'Save failed!';
+    }
+}
+
+function discardChanges() {
+    if (confirm('Discard all unsaved changes?')) {
+        hasChanges = false;
+        document.getElementById('save-bar').classList.remove('visible');
+        loadTreeData();
+    }
+}
+
+// --- Export self-contained HTML ---
+
+function printTree() {
+    // Expand all nodes
+    const nodes = document.querySelectorAll('.tf-tree li.has-children');
+    nodes.forEach(node => node.classList.remove('collapsed'));
+    allExpanded = true;
+
+    // Build a self-contained HTML with the tree data embedded
+    const title = document.getElementById('app-title').textContent;
+    const jsonStr = JSON.stringify(jsonData);
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>${title}</title>
+<style>
+:root { --bg-color:#f4f6f9; --node-bg:#ffffff; --node-border:#cbd5e1; --node-accent:#1e3a8a; --text-main:#0f172a; --text-sub:#475569; --line-color:#94a3b8; }
+* { box-sizing:border-box; user-select:none; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg-color); color:var(--text-main); margin:0; padding:0; overflow:hidden; width:100vw; height:100vh; }
+header { position:fixed; top:12px; left:12px; right:12px; z-index:1000; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.95); backdrop-filter:blur(8px); padding:10px 16px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); border:1px solid var(--node-border); }
+h1 { font-size:1.1rem; margin:0; color:var(--node-accent); }
+.controls { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+button { background:var(--node-accent); color:white; border:none; padding:6px 12px; border-radius:6px; font-size:0.85rem; font-weight:600; cursor:pointer; }
+button:active { transform:scale(0.95); }
+.zoom-btn { width:32px; height:32px; padding:0; font-size:1.1rem; }
+.zoom-level { font-size:0.8rem; font-weight:bold; color:var(--text-sub); min-width:45px; text-align:center; }
+#viewport { width:100vw; height:100vh; cursor:grab; overflow:hidden; position:relative; }
+#viewport:active { cursor:grabbing; }
+#canvas { position:absolute; transform-origin:0 0; padding:120px; display:inline-block; }
+.tf-tree { display:inline-block; white-space:nowrap; }
+.tf-tree ul { display:flex; justify-content:center; padding-top:20px; position:relative; margin:0; padding-left:0; list-style:none; }
+.tf-tree li { text-align:center; list-style:none; position:relative; padding:20px 6px 0 6px; }
+.tf-tree li::before,.tf-tree li::after { content:''; position:absolute; top:0; right:50%; border-top:2px solid var(--line-color); width:50%; height:20px; }
+.tf-tree li::after { right:auto; left:50%; border-left:2px solid var(--line-color); }
+.tf-tree li:only-child::after,.tf-tree li:only-child::before { display:none; }
+.tf-tree li:only-child { padding-top:0; }
+.tf-tree li:first-child::before,.tf-tree li:last-child::after { border:none; }
+.tf-tree li:last-child::before { border-right:2px solid var(--line-color); border-radius:0 5px 0 0; }
+.tf-tree li:first-child::after { border-radius:5px 0 0 0; }
+.tf-tree ul ul::before { content:''; position:absolute; top:0; left:50%; border-left:2px solid var(--line-color); width:0; height:20px; }
+.tf-nc { border:1px solid var(--node-border); background:var(--node-bg); display:inline-block; padding:8px 12px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.06); text-align:left; min-width:140px; max-width:220px; white-space:normal; vertical-align:top; position:relative; transition:border-color 0.2s,box-shadow 0.2s; }
+.tf-nc:hover { border-color:var(--node-accent); box-shadow:0 4px 10px rgba(0,0,0,0.12); }
+.id-tag { font-size:0.65rem; font-weight:bold; color:var(--node-accent); background:#dbeafe; padding:2px 5px; border-radius:4px; display:inline-block; margin-bottom:4px; }
+.name { font-weight:bold; font-size:0.85rem; }
+.meta { font-size:0.75rem; color:var(--text-sub); margin-top:4px; line-height:1.25; }
+.spouse { margin-top:4px; padding-top:4px; border-top:1px dashed var(--node-border); font-size:0.75rem; color:#1e293b; }
+.collapsed ul { display:none !important; }
+.has-children>.tf-nc::after { content:'\\u25BC'; font-size:0.6rem; position:absolute; bottom:2px; right:4px; color:var(--text-sub); }
+.collapsed.has-children>.tf-nc::after { content:'\\u25B6'; }
+</style>
+</head>
+<body>
+<header>
+<h1>${title}</h1>
+<div class="controls">
+<button class="zoom-btn" onclick="zoomIn()">+</button>
+<span class="zoom-level" id="zoom-indicator">100%</span>
+<button class="zoom-btn" onclick="zoomOut()">\\u2212</button>
+<button onclick="resetZoom()">Fit / Center</button>
+<button onclick="toggleLang()">Lang: <span id="lang-label">EN</span></button>
+<button onclick="toggleAll()">Expand / Collapse</button>
+</div>
+</header>
+<div id="viewport"><div id="canvas"><div class="tf-tree" id="tree-root"></div></div></div>
+<scr`+`ipt>
+var currentLang='en',allExpanded=true,scale=0.85,pointX=50,pointY=100,startX=0,startY=0,isPanning=false;
+var viewport=document.getElementById('viewport'),canvas=document.getElementById('canvas'),zoomIndicator=document.getElementById('zoom-indicator');
+var jsonData=${jsonStr};
+
+function personToNode(p){return{id:p.id,name:p.name,birth:p.birth_year||(p.birth_date?p.birth_date.split('-')[0]:''),loc:p.location||'',occ_de:p.occupation_de||'',occ_en:p.occupation_en||'',spouse:p.spouse||'',children:[]};}
+
+function buildNestedTree(json){
+var gens=json.generations,nodeMap={};
+gens.forEach(function(g){g.individuals.forEach(function(p){nodeMap[p.id]=personToNode(p);});});
+var pcm={'I.1':['II.1'],'II.1':['III.1'],'III.1':['IV.a','IV.b','IV.c','IV.c.single','IV.d']};
+['IV.a','IV.b','IV.c','IV.d'].forEach(function(k){var g=gens.find(function(x){return x.generation===k+' Children';});if(g)pcm[k]=g.individuals.map(function(p){return p.id;});});
+gens.forEach(function(g){
+var m=g.generation.match(/^([\\w.]+)\\s*Children$/);if(m)pcm[m[1].trim()]=g.individuals.map(function(p){return p.id;});
+var m2=g.generation.match(/^([\\w.]+)\\s*\\/\\s*[\\w.]+\\s*Children$/);if(m2)pcm[m2[1].trim()]=g.individuals.map(function(p){return p.id;});
+});
+function attach(node){var ids=pcm[node.id];if(ids)node.children=ids.filter(function(id){return nodeMap[id];}).map(function(id){var c=nodeMap[id];attach(c);return c;});return node;}
+return attach(nodeMap['I.1']);
+}
+
+function buildHTML(node){
+var hasKids=node.children&&node.children.length>0;
+var occ=currentLang==='de'?(node.occ_de||''):(node.occ_en||'');
+var h='<li class="'+(hasKids?'has-children':'')+'"><div class="tf-nc" onclick="tog(event,this)"><span class="id-tag">'+node.id+'</span><div class="name">'+node.name+'</div>';
+if(node.birth||node.loc||occ){h+='<div class="meta">';if(node.birth)h+='<div><sup>*</sup>'+node.birth+'</div>';if(node.loc)h+='<div>\\ud83d\\udccd '+node.loc+'</div>';if(occ)h+='<div>\\ud83d\\udcbc '+occ+'</div>';h+='</div>';}
+if(node.spouse)h+='<div class="spouse">\\ud83d\\udc8d '+node.spouse+'</div>';
+h+='</div>';
+if(hasKids){h+='<ul>';node.children.forEach(function(c){h+=buildHTML(c);});h+='</ul>';}
+h+='</li>';return h;
+}
+
+function render(){var t=buildNestedTree(jsonData);document.getElementById('tree-root').innerHTML='<ul>'+buildHTML(t)+'</ul>';setTimeout(resetZoom,50);}
+function updateTransform(){canvas.style.transform='translate('+pointX+'px,'+pointY+'px) scale('+scale+')';zoomIndicator.innerText=Math.round(scale*100)+'%';}
+function zoomIn(){scale=Math.min(scale*1.2,2.5);updateTransform();}
+function zoomOut(){scale=Math.max(scale/1.2,0.15);updateTransform();}
+function resetZoom(){scale=0.65;var vw=viewport.clientWidth,cw=canvas.clientWidth*scale;pointX=Math.max((vw-cw)/2,20);pointY=100;updateTransform();}
+function tog(e,el){e.stopPropagation();var li=el.parentElement;if(li.classList.contains('has-children'))li.classList.toggle('collapsed');}
+function toggleLang(){currentLang=currentLang==='de'?'en':'de';document.getElementById('lang-label').innerText=currentLang.toUpperCase();render();}
+function toggleAll(){allExpanded=!allExpanded;document.querySelectorAll('.tf-tree li.has-children').forEach(function(n){allExpanded?n.classList.remove('collapsed'):n.classList.add('collapsed');});}
+
+viewport.addEventListener('mousedown',function(e){if(e.target.closest('header')||e.target.closest('.tf-nc'))return;isPanning=true;startX=e.clientX-pointX;startY=e.clientY-pointY;});
+window.addEventListener('mousemove',function(e){if(!isPanning)return;e.preventDefault();pointX=e.clientX-startX;pointY=e.clientY-startY;updateTransform();});
+window.addEventListener('mouseup',function(){isPanning=false;});
+viewport.addEventListener('wheel',function(e){e.preventDefault();var xs=(e.clientX-pointX)/scale,ys=(e.clientY-pointY)/scale;if(-e.deltaY>0)scale=Math.min(scale*1.1,2.5);else scale=Math.max(scale/1.1,0.15);pointX=e.clientX-xs*scale;pointY=e.clientY-ys*scale;updateTransform();},{passive:false});
+
+render();
+</scr`+`ipt>
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Lehmann_Family_Tree.html';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Initial Setup - load from JSON
+loadTreeData();
+</script>
+
+</body>
+</html>

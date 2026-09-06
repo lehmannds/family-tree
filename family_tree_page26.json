@@ -1,0 +1,110 @@
+{
+  "source": "FAMILY ARCHIVE 05-03-2022 18.26 - Page 26",
+  "notes": "Handwritten family tree. Some names unreadable. This extends the Felix Lehmann (IV.a.2.E) branch and adds Meta Lewin's ancestry (making the structure a graph, not a pure tree).",
+  "felix_lehmann_branch": {
+    "id": "IV.a.2.E",
+    "name": "Dr. med. Felix Lehmann",
+    "birth_date": "1880-06-08",
+    "locations": ["Nürnberg", "Bensheim", "Jerusalem"],
+    "spouse": "Meta Lewin",
+    "spouse_birth_date": "1882-07-13",
+    "spouse_origin": "Königsberg",
+    "children": [
+      {
+        "id": "IV.a.2.E.1",
+        "name": "Hans Leo Lehmann",
+        "spouse": "Ellen Haas",
+        "children": [
+          {
+            "id": "IV.a.2.E.1.a",
+            "name": "Hannah Lehmann",
+            "spouse": "Eli Feist"
+          },
+          {
+            "id": "IV.a.2.E.1.b",
+            "name": "Hermann Lehmann",
+            "spouse": null,
+            "spouse_note": "unreadable from source"
+          },
+          {
+            "id": "IV.a.2.E.1.c",
+            "name": "Rose Lehmann",
+            "spouse": "Benjamin Sklartz"
+          },
+          {
+            "id": "IV.a.2.E.1.d",
+            "name": "Jonathan Lehmann",
+            "spouse": "Sue Rich",
+            "note": "youngest child",
+            "children": [
+              { "id": "IV.a.2.E.1.d.1", "name": "David" },
+              { "id": "IV.a.2.E.1.d.2", "name": "Joshua" },
+              { "id": "IV.a.2.E.1.d.3", "name": "Talia" },
+              { "id": "IV.a.2.E.1.d.4", "name": "Daniel", "note": "not listed in original document" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "IV.a.2.E.2",
+        "name": "Hermann Lehmann",
+        "birth_year": "1911",
+        "death_year": "1925",
+        "death_note": "died age 14"
+      },
+      {
+        "id": "IV.a.2.E.3",
+        "name": "Eli Lehmann",
+        "location": "Beer Sheva",
+        "marriages": [
+          {
+            "order": 1,
+            "spouse": null,
+            "spouse_note": "name unreadable from source",
+            "children": [
+              { "id": "IV.a.2.E.3.a", "name": "Daniela" }
+            ]
+          },
+          {
+            "order": 2,
+            "spouse": "Margit Falk",
+            "children_note": "children shown as lines but names not written"
+          }
+        ]
+      }
+    ]
+  },
+  "meta_lewin_ancestry": {
+    "note": "Meta Lewin's parents and siblings - makes this a graph since they are not descendants of Michael Ephraim Lehmann",
+    "father": {
+      "name": "Abraham Isaac Levin",
+      "name_confidence": "low - partially unreadable"
+    },
+    "mother": {
+      "name": null,
+      "name_note": "unreadable from source"
+    },
+    "children_count": 6,
+    "children_note": "6 children listed, 3rd and 6th have their own children shown. Meta Lewin is one of the six.",
+    "children": [
+      { "position": 1, "name": null },
+      { "position": 2, "name": null },
+      { "position": 3, "name": null, "has_children": true },
+      { "position": 4, "name": null },
+      { "position": 5, "name": null },
+      { "position": 6, "name": null, "has_children": true }
+    ]
+  },
+  "ellen_haas_ancestry": {
+    "note": "Ellen Haas's parents and siblings shown - makes this a graph since they are not descendants of Michael Ephraim Lehmann",
+    "father": {
+      "name": null,
+      "name_note": "unreadable from source"
+    },
+    "mother": {
+      "name": null,
+      "name_note": "unreadable from source"
+    },
+    "siblings_note": "siblings listed but names unreadable"
+  }
+}

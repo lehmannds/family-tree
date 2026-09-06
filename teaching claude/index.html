@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude למי שלא מתכנת</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Slide container -->
+  <div id="presentation">
+    <div id="slide" class="slide">
+      <div class="slide-emoji" id="slide-emoji"></div>
+      <h1 id="slide-title"></h1>
+      <ul id="slide-bullets"></ul>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-bar">
+      <button id="btn-next" onclick="nextSlide()">הבא ←</button>
+      <span id="slide-counter"></span>
+      <button id="btn-prev" onclick="prevSlide()">→ הקודם</button>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+
+    <!-- Speaker notes (toggle with N key) -->
+    <div id="speaker-notes" class="speaker-notes hidden">
+      <strong>הערות למציג:</strong>
+      <p id="notes-text"></p>
+    </div>
+  </div>
+
+  <!-- Load content from external file -->
+  <script src="slides-content.js"></script>
+
+  <script>
+    let currentSlide = 0;
+
+    function renderSlide(index) {
+      const slide = slidesContent[index];
+      if (!slide) return;
+
+      // Title & emoji
+      document.getElementById('slide-title').textContent = slide.title;
+      document.getElementById('slide-emoji').textContent = slide.emoji || '';
+
+      // Bullets
+      const ul = document.getElementById('slide-bullets');
+      ul.innerHTML = '';
+      (slide.bullets || []).forEach(text => {
+        const li = document.createElement('li');
+        const isIndented = text.startsWith('  •');
+        if (isIndented) {
+          li.className = 'sub-bullet';
+          li.textContent = text.replace(/^\s+•\s*/, '');
+        } else {
+          li.textContent = text;
+        }
+        ul.appendChild(li);
+      });
+
+      // Notes
+      document.getElementById('notes-text').textContent = slide.notes || '';
+
+      // Counter
+      document.getElementById('slide-counter').textContent =
+        `${index + 1} / ${slidesContent.length}`;
+
+      // Progress bar
+      const pct = ((index + 1) / slidesContent.length) * 100;
+      document.getElementById('progress-fill').style.width = pct + '%';
+
+      // Nav button states
+      document.getElementById('btn-prev').disabled = index === 0;
+      document.getElementById('btn-next').disabled = index === slidesContent.length - 1;
+
+      // Animate
+      const slideEl = document.getElementById('slide');
+      slideEl.classList.remove('slide-enter');
+      void slideEl.offsetWidth; // reflow trigger
+      slideEl.classList.add('slide-enter');
+    }
+
+    function nextSlide() {
+      if (currentSlide < slidesContent.length - 1) {
+        currentSlide++;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderSlide(currentSlide);
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'n' || e.key === 'N' || e.key === 'נ') {
+        document.getElementById('speaker-notes').classList.toggle('hidden');
+      } else if (e.key === 'Home') {
+        currentSlide = 0;
+        renderSlide(currentSlide);
+      } else if (e.key === 'End') {
+        currentSlide = slidesContent.length - 1;
+        renderSlide(currentSlide);
+      } else if (e.key === 'f' || e.key === 'F' || e.key === 'כ') {
+        toggleFullscreen();
+      }
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Touch support for mobile
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    document.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) nextSlide();   // swipe left = next (RTL)
+        else prevSlide();             // swipe right = prev (RTL)
+      }
+    });
+
+    // Initialize
+    renderSlide(0);
+  </script>
+
+</body>
+</html>
